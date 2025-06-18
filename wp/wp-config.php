@@ -17,7 +17,20 @@
  *
  * @package WordPress
  */
+/**
+ * The base configuration for WordPress
+ * ...
+ */
 
+if (isset($_ENV['NETLIFY_DATABASE_URL'])) {
+    $url = parse_url($_ENV['NETLIFY_DATABASE_URL']);
+    define('DB_NAME', trim($url['path'], '/'));
+    define('DB_USER', $url['user']);
+    define('DB_PASSWORD', $url['pass']);
+    define('DB_HOST', $url['host'] . ':' . $url['port']);
+    define('DB_CHARSET', 'utf8');
+    define('DB_COLLATE', '');
+}
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 if (isset($_ENV['DATABASE'])) {
